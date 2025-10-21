@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Form Input Pegawai</title>
-</head>
-<body>
+@extends('master')
+@section('title', 'Daftar Pegawai')
+@section('content')
     <h1 class="mb-4">Form Pegawai</h1>
     <form action="{{ route('employees.store') }}" method="POST">
         @csrf
@@ -50,6 +47,4 @@
             </tr>
         </table>
     </form>
-</body>
-
-</html>
+@endsection

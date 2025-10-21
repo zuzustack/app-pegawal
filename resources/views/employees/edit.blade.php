@@ -1,3 +1,6 @@
+@extends('master')
+@section('title', 'Daftar Pegawai')
+@section('content')
 <h2>Edit Data Pegawai</h2>
 <form action="{{ route('employees.update', $employee->id) }}" method="POST">
     @csrf
@@ -49,3 +52,4 @@
         </tr>
     </table>
 </form>
+@endsection

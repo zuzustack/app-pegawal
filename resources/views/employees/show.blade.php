@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Detail Pegawai</title>
-</head>
-
-<body>
+@extends('master')
+@section('title', 'Daftar Pegawai')
+@section('content')
     <h1>Detail Pegawai</h1>
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
@@ -37,6 +32,4 @@
             <td>{{ $employee->status }}</td>
         </tr>
     </table>
-</body>
-
-</html>
+@endsection
