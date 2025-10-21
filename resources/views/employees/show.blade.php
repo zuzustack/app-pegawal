@@ -2,6 +2,7 @@
 @section('title', 'Daftar Pegawai')
 @section('content')
     <h1>Detail Pegawai</h1>
+    <button class="btn btn-secondary mb-3" onclick="window.history.back();">Kembali</button>
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
             <th>Nama Lengkap</th>

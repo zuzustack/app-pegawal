@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\Position;
 
 class EmployeeController extends Controller
 {
@@ -12,7 +14,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::latest()->paginate(5);
+        $employees = Employee::with('departemen', 'jabatan')->latest()->paginate(5);
 
         return view('employees.index', compact('employees'));
     }
@@ -22,7 +24,10 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        $positions = Position::all();
+        $departments = Department::all();
+
+        return view('employees.create', compact('positions', 'departments'));
     }
 
     /**
@@ -37,8 +42,11 @@ class EmployeeController extends Controller
             'tanggal_lahir' => 'required|date',
             'alamat' => 'required|string|max:255',
             'tanggal_masuk' => 'required|date',
+            'jabatan_id' => 'required|exists:positions,id',
+            'departemen_id' => 'required|exists:departments,id',
             'status' => 'required|string|max:50',
         ]);
+
         Employee::create($request->all());
         return redirect()->route('employees.index');
     }
@@ -48,7 +56,7 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::with('departemen', 'jabatan')->find($id);
         return view('employees.show', compact('employee'));
     }
 
@@ -57,8 +65,10 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
+        $positions = Position::all();
+        $departments = Department::all();
         $employee = Employee::find($id);
-        return view('employees.edit', compact('employee'));
+        return view('employees.edit', compact('employee', 'positions', 'departments'));
     }
 
     /**
@@ -73,6 +83,8 @@ class EmployeeController extends Controller
             'nomor_telepon' => 'required|string|max:20',
             'tanggal_lahir' => 'required|date',
             'alamat' => 'required|string|max:255',
+            'jabatan_id' => 'required|exists:positions,id',
+            'departemen_id' => 'required|exists:departments,id',
             'tanggal_masuk' => 'required|date',
             'status' => 'required|string|max:50',
         ]);
@@ -82,6 +94,8 @@ class EmployeeController extends Controller
             'email',
             'nomor_telepon',
             'tanggal_lahir',
+            'jabatan_id',
+            'departemen_id',
             'alamat',
             'tanggal_masuk',
             'status',
